@@ -1,0 +1,470 @@
+
+MSC1937_vfd.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000038a  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         0000000e  00800060  0000038a  000003fe  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  0000040c  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  0000043c  2**2
+                  CONTENTS, READONLY
+  4 .debug_info   000004e6  00000000  00000000  00000478  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_abbrev 000004a3  00000000  00000000  0000095e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_line   0000001a  00000000  00000000  00000e01  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_str    00000196  00000000  00000000  00000e1b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+   8:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+   c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  10:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  14:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  18:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  1c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  20:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  24:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  28:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  2c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  30:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  34:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  38:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  3c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  40:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  44:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  48:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  4c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  50:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_copy_data>:
+  60:	10 e0       	ldi	r17, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	ea e8       	ldi	r30, 0x8A	; 138
+  68:	f3 e0       	ldi	r31, 0x03	; 3
+  6a:	02 c0       	rjmp	.+4      	; 0x70 <__do_copy_data+0x10>
+  6c:	05 90       	lpm	r0, Z+
+  6e:	0d 92       	st	X+, r0
+  70:	ae 36       	cpi	r26, 0x6E	; 110
+  72:	b1 07       	cpc	r27, r17
+  74:	d9 f7       	brne	.-10     	; 0x6c <__do_copy_data+0xc>
+  76:	0e 94 01 01 	call	0x202	; 0x202 <main>
+  7a:	0c 94 c3 01 	jmp	0x386	; 0x386 <_exit>
+
+0000007e <__bad_interrupt>:
+  7e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000082 <VFD_putc>:
+  82:	0e 94 fc 00 	call	0x1f8	; 0x1f8 <SPI_transfer>
+  86:	87 ec       	ldi	r24, 0xC7	; 199
+  88:	90 e0       	ldi	r25, 0x00	; 0
+  8a:	01 97       	sbiw	r24, 0x01	; 1
+  8c:	f1 f7       	brne	.-4      	; 0x8a <VFD_putc+0x8>
+  8e:	00 c0       	rjmp	.+0      	; 0x90 <VFD_putc+0xe>
+  90:	00 00       	nop
+  92:	08 95       	ret
+
+00000094 <VFD_puts>:
+  94:	cf 93       	push	r28
+  96:	df 93       	push	r29
+  98:	ec 01       	movw	r28, r24
+  9a:	89 91       	ld	r24, Y+
+  9c:	88 23       	and	r24, r24
+  9e:	19 f0       	breq	.+6      	; 0xa6 <VFD_puts+0x12>
+  a0:	0e 94 41 00 	call	0x82	; 0x82 <VFD_putc>
+  a4:	fa cf       	rjmp	.-12     	; 0x9a <VFD_puts+0x6>
+  a6:	df 91       	pop	r29
+  a8:	cf 91       	pop	r28
+  aa:	08 95       	ret
+
+000000ac <VFD_int>:
+  ac:	cf 93       	push	r28
+  ae:	df 93       	push	r29
+  b0:	cd b7       	in	r28, 0x3d	; 61
+  b2:	de b7       	in	r29, 0x3e	; 62
+  b4:	61 97       	sbiw	r28, 0x11	; 17
+  b6:	0f b6       	in	r0, 0x3f	; 63
+  b8:	f8 94       	cli
+  ba:	de bf       	out	0x3e, r29	; 62
+  bc:	0f be       	out	0x3f, r0	; 63
+  be:	cd bf       	out	0x3d, r28	; 61
+  c0:	ab 01       	movw	r20, r22
+  c2:	be 01       	movw	r22, r28
+  c4:	6f 5f       	subi	r22, 0xFF	; 255
+  c6:	7f 4f       	sbci	r23, 0xFF	; 255
+  c8:	0e 94 83 01 	call	0x306	; 0x306 <itoa>
+  cc:	0e 94 4a 00 	call	0x94	; 0x94 <VFD_puts>
+  d0:	61 96       	adiw	r28, 0x11	; 17
+  d2:	0f b6       	in	r0, 0x3f	; 63
+  d4:	f8 94       	cli
+  d6:	de bf       	out	0x3e, r29	; 62
+  d8:	0f be       	out	0x3f, r0	; 63
+  da:	cd bf       	out	0x3d, r28	; 61
+  dc:	df 91       	pop	r29
+  de:	cf 91       	pop	r28
+  e0:	08 95       	ret
+
+000000e2 <VFD_DigitCC>:
+  e2:	80 31       	cpi	r24, 0x10	; 16
+  e4:	10 f0       	brcs	.+4      	; 0xea <VFD_DigitCC+0x8>
+  e6:	80 ec       	ldi	r24, 0xC0	; 192
+  e8:	01 c0       	rjmp	.+2      	; 0xec <VFD_DigitCC+0xa>
+  ea:	80 6c       	ori	r24, 0xC0	; 192
+  ec:	0e 94 fc 00 	call	0x1f8	; 0x1f8 <SPI_transfer>
+  f0:	87 ec       	ldi	r24, 0xC7	; 199
+  f2:	90 e0       	ldi	r25, 0x00	; 0
+  f4:	01 97       	sbiw	r24, 0x01	; 1
+  f6:	f1 f7       	brne	.-4      	; 0xf4 <VFD_DigitCC+0x12>
+  f8:	00 c0       	rjmp	.+0      	; 0xfa <VFD_DigitCC+0x18>
+  fa:	00 00       	nop
+  fc:	08 95       	ret
+
+000000fe <VFD_DutyCC>:
+  fe:	80 6e       	ori	r24, 0xE0	; 224
+ 100:	0e 94 fc 00 	call	0x1f8	; 0x1f8 <SPI_transfer>
+ 104:	87 ec       	ldi	r24, 0xC7	; 199
+ 106:	90 e0       	ldi	r25, 0x00	; 0
+ 108:	01 97       	sbiw	r24, 0x01	; 1
+ 10a:	f1 f7       	brne	.-4      	; 0x108 <VFD_DutyCC+0xa>
+ 10c:	00 c0       	rjmp	.+0      	; 0x10e <VFD_DutyCC+0x10>
+ 10e:	00 00       	nop
+ 110:	08 95       	ret
+
+00000112 <VFD_BufferPC>:
+ 112:	81 11       	cpse	r24, r1
+ 114:	02 c0       	rjmp	.+4      	; 0x11a <VFD_BufferPC+0x8>
+ 116:	8f ea       	ldi	r24, 0xAF	; 175
+ 118:	03 c0       	rjmp	.+6      	; 0x120 <VFD_BufferPC+0xe>
+ 11a:	81 50       	subi	r24, 0x01	; 1
+ 11c:	8f 70       	andi	r24, 0x0F	; 15
+ 11e:	80 6a       	ori	r24, 0xA0	; 160
+ 120:	0e 94 fc 00 	call	0x1f8	; 0x1f8 <SPI_transfer>
+ 124:	87 ec       	ldi	r24, 0xC7	; 199
+ 126:	90 e0       	ldi	r25, 0x00	; 0
+ 128:	01 97       	sbiw	r24, 0x01	; 1
+ 12a:	f1 f7       	brne	.-4      	; 0x128 <VFD_BufferPC+0x16>
+ 12c:	00 c0       	rjmp	.+0      	; 0x12e <VFD_BufferPC+0x1c>
+ 12e:	00 00       	nop
+ 130:	08 95       	ret
+
+00000132 <VFD_cls>:
+ 132:	cf 93       	push	r28
+ 134:	df 93       	push	r29
+ 136:	d8 2f       	mov	r29, r24
+ 138:	80 e0       	ldi	r24, 0x00	; 0
+ 13a:	0e 94 89 00 	call	0x112	; 0x112 <VFD_BufferPC>
+ 13e:	c0 e0       	ldi	r28, 0x00	; 0
+ 140:	cd 17       	cp	r28, r29
+ 142:	59 f0       	breq	.+22     	; 0x15a <VFD_cls+0x28>
+ 144:	80 e2       	ldi	r24, 0x20	; 32
+ 146:	0e 94 fc 00 	call	0x1f8	; 0x1f8 <SPI_transfer>
+ 14a:	87 ec       	ldi	r24, 0xC7	; 199
+ 14c:	90 e0       	ldi	r25, 0x00	; 0
+ 14e:	01 97       	sbiw	r24, 0x01	; 1
+ 150:	f1 f7       	brne	.-4      	; 0x14e <VFD_cls+0x1c>
+ 152:	00 c0       	rjmp	.+0      	; 0x154 <VFD_cls+0x22>
+ 154:	00 00       	nop
+ 156:	cf 5f       	subi	r28, 0xFF	; 255
+ 158:	f3 cf       	rjmp	.-26     	; 0x140 <VFD_cls+0xe>
+ 15a:	df 91       	pop	r29
+ 15c:	cf 91       	pop	r28
+ 15e:	08 95       	ret
+
+00000160 <VFD_init>:
+ 160:	cf 93       	push	r28
+ 162:	c8 2f       	mov	r28, r24
+ 164:	8a 9a       	sbi	0x11, 2	; 17
+ 166:	92 9a       	sbi	0x12, 2	; 18
+ 168:	bc 9a       	sbi	0x17, 4	; 23
+ 16a:	0e 94 d6 00 	call	0x1ac	; 0x1ac <SPI_init>
+ 16e:	84 e0       	ldi	r24, 0x04	; 4
+ 170:	0e 94 e3 00 	call	0x1c6	; 0x1c6 <SPI_setDataMode>
+ 174:	81 e0       	ldi	r24, 0x01	; 1
+ 176:	0e 94 dd 00 	call	0x1ba	; 0x1ba <SPI_setBitOrder>
+ 17a:	86 e0       	ldi	r24, 0x06	; 6
+ 17c:	0e 94 e8 00 	call	0x1d0	; 0x1d0 <SPI_setClockDivider>
+ 180:	92 98       	cbi	0x12, 2	; 18
+ 182:	8f ec       	ldi	r24, 0xCF	; 207
+ 184:	97 e0       	ldi	r25, 0x07	; 7
+ 186:	01 97       	sbiw	r24, 0x01	; 1
+ 188:	f1 f7       	brne	.-4      	; 0x186 <VFD_init+0x26>
+ 18a:	00 c0       	rjmp	.+0      	; 0x18c <VFD_init+0x2c>
+ 18c:	00 00       	nop
+ 18e:	92 9a       	sbi	0x12, 2	; 18
+ 190:	95 e0       	ldi	r25, 0x05	; 5
+ 192:	9a 95       	dec	r25
+ 194:	f1 f7       	brne	.-4      	; 0x192 <VFD_init+0x32>
+ 196:	00 00       	nop
+ 198:	8c 2f       	mov	r24, r28
+ 19a:	0e 94 71 00 	call	0xe2	; 0xe2 <VFD_DigitCC>
+ 19e:	8f e1       	ldi	r24, 0x1F	; 31
+ 1a0:	0e 94 7f 00 	call	0xfe	; 0xfe <VFD_DutyCC>
+ 1a4:	8c 2f       	mov	r24, r28
+ 1a6:	cf 91       	pop	r28
+ 1a8:	0c 94 99 00 	jmp	0x132	; 0x132 <VFD_cls>
+
+000001ac <SPI_init>:
+ 1ac:	8d b1       	in	r24, 0x0d	; 13
+ 1ae:	80 65       	ori	r24, 0x50	; 80
+ 1b0:	8d b9       	out	0x0d, r24	; 13
+ 1b2:	87 b3       	in	r24, 0x17	; 23
+ 1b4:	80 6a       	ori	r24, 0xA0	; 160
+ 1b6:	87 bb       	out	0x17, r24	; 23
+ 1b8:	08 95       	ret
+
+000001ba <SPI_setBitOrder>:
+ 1ba:	81 11       	cpse	r24, r1
+ 1bc:	02 c0       	rjmp	.+4      	; 0x1c2 <SPI_setBitOrder+0x8>
+ 1be:	6d 9a       	sbi	0x0d, 5	; 13
+ 1c0:	08 95       	ret
+ 1c2:	6d 98       	cbi	0x0d, 5	; 13
+ 1c4:	08 95       	ret
+
+000001c6 <SPI_setDataMode>:
+ 1c6:	9d b1       	in	r25, 0x0d	; 13
+ 1c8:	93 7f       	andi	r25, 0xF3	; 243
+ 1ca:	89 2b       	or	r24, r25
+ 1cc:	8d b9       	out	0x0d, r24	; 13
+ 1ce:	08 95       	ret
+
+000001d0 <SPI_setClockDivider>:
+ 1d0:	9d b1       	in	r25, 0x0d	; 13
+ 1d2:	9c 7f       	andi	r25, 0xFC	; 252
+ 1d4:	28 2f       	mov	r18, r24
+ 1d6:	23 70       	andi	r18, 0x03	; 3
+ 1d8:	92 2b       	or	r25, r18
+ 1da:	9d b9       	out	0x0d, r25	; 13
+ 1dc:	82 fb       	bst	r24, 2
+ 1de:	88 27       	eor	r24, r24
+ 1e0:	80 f9       	bld	r24, 0
+ 1e2:	80 fd       	sbrc	r24, 0
+ 1e4:	70 9a       	sbi	0x0e, 0	; 14
+ 1e6:	80 ff       	sbrs	r24, 0
+ 1e8:	70 98       	cbi	0x0e, 0	; 14
+ 1ea:	08 95       	ret
+
+000001ec <SPI_end>:
+ 1ec:	6e 98       	cbi	0x0d, 6	; 13
+ 1ee:	08 95       	ret
+
+000001f0 <SPI_attachInterrupt>:
+ 1f0:	6f 9a       	sbi	0x0d, 7	; 13
+ 1f2:	08 95       	ret
+
+000001f4 <SPI_detachInterrupt>:
+ 1f4:	6f 98       	cbi	0x0d, 7	; 13
+ 1f6:	08 95       	ret
+
+000001f8 <SPI_transfer>:
+ 1f8:	8f b9       	out	0x0f, r24	; 15
+ 1fa:	77 9b       	sbis	0x0e, 7	; 14
+ 1fc:	fe cf       	rjmp	.-4      	; 0x1fa <SPI_transfer+0x2>
+ 1fe:	8f b1       	in	r24, 0x0f	; 15
+ 200:	08 95       	ret
+
+00000202 <main>:
+ 202:	80 e1       	ldi	r24, 0x10	; 16
+ 204:	0e 94 b0 00 	call	0x160	; 0x160 <VFD_init>
+ 208:	c0 e0       	ldi	r28, 0x00	; 0
+ 20a:	d0 e0       	ldi	r29, 0x00	; 0
+ 20c:	87 e0       	ldi	r24, 0x07	; 7
+ 20e:	0e 94 89 00 	call	0x112	; 0x112 <VFD_BufferPC>
+ 212:	6a e0       	ldi	r22, 0x0A	; 10
+ 214:	70 e0       	ldi	r23, 0x00	; 0
+ 216:	ce 01       	movw	r24, r28
+ 218:	0e 94 56 00 	call	0xac	; 0xac <VFD_int>
+ 21c:	8c 2f       	mov	r24, r28
+ 21e:	0e 94 7f 00 	call	0xfe	; 0xfe <VFD_DutyCC>
+ 222:	2f ef       	ldi	r18, 0xFF	; 255
+ 224:	80 e7       	ldi	r24, 0x70	; 112
+ 226:	92 e0       	ldi	r25, 0x02	; 2
+ 228:	21 50       	subi	r18, 0x01	; 1
+ 22a:	80 40       	sbci	r24, 0x00	; 0
+ 22c:	90 40       	sbci	r25, 0x00	; 0
+ 22e:	e1 f7       	brne	.-8      	; 0x228 <main+0x26>
+ 230:	00 c0       	rjmp	.+0      	; 0x232 <main+0x30>
+ 232:	00 00       	nop
+ 234:	21 96       	adiw	r28, 0x01	; 1
+ 236:	c0 32       	cpi	r28, 0x20	; 32
+ 238:	d1 05       	cpc	r29, r1
+ 23a:	41 f7       	brne	.-48     	; 0x20c <main+0xa>
+ 23c:	cf e1       	ldi	r28, 0x1F	; 31
+ 23e:	d0 e0       	ldi	r29, 0x00	; 0
+ 240:	1c 2f       	mov	r17, r28
+ 242:	87 e0       	ldi	r24, 0x07	; 7
+ 244:	0e 94 89 00 	call	0x112	; 0x112 <VFD_BufferPC>
+ 248:	6a e0       	ldi	r22, 0x0A	; 10
+ 24a:	70 e0       	ldi	r23, 0x00	; 0
+ 24c:	ce 01       	movw	r24, r28
+ 24e:	0e 94 56 00 	call	0xac	; 0xac <VFD_int>
+ 252:	ca 30       	cpi	r28, 0x0A	; 10
+ 254:	18 f4       	brcc	.+6      	; 0x25c <main+0x5a>
+ 256:	80 e2       	ldi	r24, 0x20	; 32
+ 258:	0e 94 41 00 	call	0x82	; 0x82 <VFD_putc>
+ 25c:	81 2f       	mov	r24, r17
+ 25e:	0e 94 7f 00 	call	0xfe	; 0xfe <VFD_DutyCC>
+ 262:	2f ef       	ldi	r18, 0xFF	; 255
+ 264:	83 ec       	ldi	r24, 0xC3	; 195
+ 266:	99 e0       	ldi	r25, 0x09	; 9
+ 268:	21 50       	subi	r18, 0x01	; 1
+ 26a:	80 40       	sbci	r24, 0x00	; 0
+ 26c:	90 40       	sbci	r25, 0x00	; 0
+ 26e:	e1 f7       	brne	.-8      	; 0x268 <main+0x66>
+ 270:	00 c0       	rjmp	.+0      	; 0x272 <main+0x70>
+ 272:	00 00       	nop
+ 274:	21 97       	sbiw	r28, 0x01	; 1
+ 276:	21 f7       	brne	.-56     	; 0x240 <main+0x3e>
+ 278:	8f e1       	ldi	r24, 0x1F	; 31
+ 27a:	0e 94 7f 00 	call	0xfe	; 0xfe <VFD_DutyCC>
+ 27e:	80 e0       	ldi	r24, 0x00	; 0
+ 280:	0e 94 89 00 	call	0x112	; 0x112 <VFD_BufferPC>
+ 284:	80 e6       	ldi	r24, 0x60	; 96
+ 286:	90 e0       	ldi	r25, 0x00	; 0
+ 288:	0e 94 4a 00 	call	0x94	; 0x94 <VFD_puts>
+ 28c:	8f e0       	ldi	r24, 0x0F	; 15
+ 28e:	0e 94 89 00 	call	0x112	; 0x112 <VFD_BufferPC>
+ 292:	8d e2       	ldi	r24, 0x2D	; 45
+ 294:	0e 94 41 00 	call	0x82	; 0x82 <VFD_putc>
+ 298:	2f ef       	ldi	r18, 0xFF	; 255
+ 29a:	80 e7       	ldi	r24, 0x70	; 112
+ 29c:	92 e0       	ldi	r25, 0x02	; 2
+ 29e:	21 50       	subi	r18, 0x01	; 1
+ 2a0:	80 40       	sbci	r24, 0x00	; 0
+ 2a2:	90 40       	sbci	r25, 0x00	; 0
+ 2a4:	e1 f7       	brne	.-8      	; 0x29e <main+0x9c>
+ 2a6:	00 c0       	rjmp	.+0      	; 0x2a8 <main+0xa6>
+ 2a8:	00 00       	nop
+ 2aa:	8f e0       	ldi	r24, 0x0F	; 15
+ 2ac:	0e 94 89 00 	call	0x112	; 0x112 <VFD_BufferPC>
+ 2b0:	8f e2       	ldi	r24, 0x2F	; 47
+ 2b2:	0e 94 41 00 	call	0x82	; 0x82 <VFD_putc>
+ 2b6:	2f ef       	ldi	r18, 0xFF	; 255
+ 2b8:	80 e7       	ldi	r24, 0x70	; 112
+ 2ba:	92 e0       	ldi	r25, 0x02	; 2
+ 2bc:	21 50       	subi	r18, 0x01	; 1
+ 2be:	80 40       	sbci	r24, 0x00	; 0
+ 2c0:	90 40       	sbci	r25, 0x00	; 0
+ 2c2:	e1 f7       	brne	.-8      	; 0x2bc <main+0xba>
+ 2c4:	00 c0       	rjmp	.+0      	; 0x2c6 <main+0xc4>
+ 2c6:	00 00       	nop
+ 2c8:	8f e0       	ldi	r24, 0x0F	; 15
+ 2ca:	0e 94 89 00 	call	0x112	; 0x112 <VFD_BufferPC>
+ 2ce:	81 e3       	ldi	r24, 0x31	; 49
+ 2d0:	0e 94 41 00 	call	0x82	; 0x82 <VFD_putc>
+ 2d4:	2f ef       	ldi	r18, 0xFF	; 255
+ 2d6:	80 e7       	ldi	r24, 0x70	; 112
+ 2d8:	92 e0       	ldi	r25, 0x02	; 2
+ 2da:	21 50       	subi	r18, 0x01	; 1
+ 2dc:	80 40       	sbci	r24, 0x00	; 0
+ 2de:	90 40       	sbci	r25, 0x00	; 0
+ 2e0:	e1 f7       	brne	.-8      	; 0x2da <main+0xd8>
+ 2e2:	00 c0       	rjmp	.+0      	; 0x2e4 <main+0xe2>
+ 2e4:	00 00       	nop
+ 2e6:	8f e0       	ldi	r24, 0x0F	; 15
+ 2e8:	0e 94 89 00 	call	0x112	; 0x112 <VFD_BufferPC>
+ 2ec:	8c e5       	ldi	r24, 0x5C	; 92
+ 2ee:	0e 94 41 00 	call	0x82	; 0x82 <VFD_putc>
+ 2f2:	2f ef       	ldi	r18, 0xFF	; 255
+ 2f4:	80 e7       	ldi	r24, 0x70	; 112
+ 2f6:	92 e0       	ldi	r25, 0x02	; 2
+ 2f8:	21 50       	subi	r18, 0x01	; 1
+ 2fa:	80 40       	sbci	r24, 0x00	; 0
+ 2fc:	90 40       	sbci	r25, 0x00	; 0
+ 2fe:	e1 f7       	brne	.-8      	; 0x2f8 <main+0xf6>
+ 300:	00 c0       	rjmp	.+0      	; 0x302 <main+0x100>
+ 302:	00 00       	nop
+ 304:	c3 cf       	rjmp	.-122    	; 0x28c <main+0x8a>
+
+00000306 <itoa>:
+ 306:	45 32       	cpi	r20, 0x25	; 37
+ 308:	51 05       	cpc	r21, r1
+ 30a:	20 f4       	brcc	.+8      	; 0x314 <itoa+0xe>
+ 30c:	42 30       	cpi	r20, 0x02	; 2
+ 30e:	10 f0       	brcs	.+4      	; 0x314 <itoa+0xe>
+ 310:	0c 94 8e 01 	jmp	0x31c	; 0x31c <__itoa_ncheck>
+ 314:	fb 01       	movw	r30, r22
+ 316:	10 82       	st	Z, r1
+ 318:	cb 01       	movw	r24, r22
+ 31a:	08 95       	ret
+
+0000031c <__itoa_ncheck>:
+ 31c:	bb 27       	eor	r27, r27
+ 31e:	4a 30       	cpi	r20, 0x0A	; 10
+ 320:	31 f4       	brne	.+12     	; 0x32e <__itoa_ncheck+0x12>
+ 322:	99 23       	and	r25, r25
+ 324:	22 f4       	brpl	.+8      	; 0x32e <__itoa_ncheck+0x12>
+ 326:	bd e2       	ldi	r27, 0x2D	; 45
+ 328:	90 95       	com	r25
+ 32a:	81 95       	neg	r24
+ 32c:	9f 4f       	sbci	r25, 0xFF	; 255
+ 32e:	0c 94 9a 01 	jmp	0x334	; 0x334 <__utoa_common>
+
+00000332 <__utoa_ncheck>:
+ 332:	bb 27       	eor	r27, r27
+
+00000334 <__utoa_common>:
+ 334:	fb 01       	movw	r30, r22
+ 336:	55 27       	eor	r21, r21
+ 338:	aa 27       	eor	r26, r26
+ 33a:	88 0f       	add	r24, r24
+ 33c:	99 1f       	adc	r25, r25
+ 33e:	aa 1f       	adc	r26, r26
+ 340:	a4 17       	cp	r26, r20
+ 342:	10 f0       	brcs	.+4      	; 0x348 <__utoa_common+0x14>
+ 344:	a4 1b       	sub	r26, r20
+ 346:	83 95       	inc	r24
+ 348:	50 51       	subi	r21, 0x10	; 16
+ 34a:	b9 f7       	brne	.-18     	; 0x33a <__utoa_common+0x6>
+ 34c:	a0 5d       	subi	r26, 0xD0	; 208
+ 34e:	aa 33       	cpi	r26, 0x3A	; 58
+ 350:	08 f0       	brcs	.+2      	; 0x354 <__utoa_common+0x20>
+ 352:	a9 5d       	subi	r26, 0xD9	; 217
+ 354:	a1 93       	st	Z+, r26
+ 356:	00 97       	sbiw	r24, 0x00	; 0
+ 358:	79 f7       	brne	.-34     	; 0x338 <__utoa_common+0x4>
+ 35a:	b1 11       	cpse	r27, r1
+ 35c:	b1 93       	st	Z+, r27
+ 35e:	11 92       	st	Z+, r1
+ 360:	cb 01       	movw	r24, r22
+ 362:	0c 94 b3 01 	jmp	0x366	; 0x366 <strrev>
+
+00000366 <strrev>:
+ 366:	dc 01       	movw	r26, r24
+ 368:	fc 01       	movw	r30, r24
+ 36a:	67 2f       	mov	r22, r23
+ 36c:	71 91       	ld	r23, Z+
+ 36e:	77 23       	and	r23, r23
+ 370:	e1 f7       	brne	.-8      	; 0x36a <strrev+0x4>
+ 372:	32 97       	sbiw	r30, 0x02	; 2
+ 374:	04 c0       	rjmp	.+8      	; 0x37e <strrev+0x18>
+ 376:	7c 91       	ld	r23, X
+ 378:	6d 93       	st	X+, r22
+ 37a:	70 83       	st	Z, r23
+ 37c:	62 91       	ld	r22, -Z
+ 37e:	ae 17       	cp	r26, r30
+ 380:	bf 07       	cpc	r27, r31
+ 382:	c8 f3       	brcs	.-14     	; 0x376 <strrev+0x10>
+ 384:	08 95       	ret
+
+00000386 <_exit>:
+ 386:	f8 94       	cli
+
+00000388 <__stop_program>:
+ 388:	ff cf       	rjmp	.-2      	; 0x388 <__stop_program>
